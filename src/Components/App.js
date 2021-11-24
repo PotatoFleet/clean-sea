@@ -2,10 +2,12 @@ import "../css/App.css";
 import MainMenuButton from "./MainMenuButton";
 import Bubble from "./Bubble";
 import Tower from "./Tower";
+import Grass from "./Grass";
 import coin from "../img/coin.png";
 import heart from "../img/heart.png";
 
 const mainMenuBubbles = 10;
+
 const towers = {
   1: {
     name: "First Tower",
@@ -15,9 +17,29 @@ const towers = {
   },
 };
 
+const grasses = {
+  1: {
+    x: 60,
+    y: 70,
+  },
+  2: {
+    x: 300,
+    y: 30,
+  },
+  3: {
+    x: 525,
+    y: 60,
+  },
+  4: {
+    x: 600,
+    y: 200,
+  },
+};
+
 function App() {
   let bubbleComponents = [];
   let towerComponents = [];
+  let grassComponents = [];
 
   document.body.scrollTop = document.documentElement.scrollTop = 0;
 
@@ -33,6 +55,13 @@ function App() {
     towerComponents.push(towerComponent);
   }
 
+  for (const grass in grasses) {
+    let grassComponent = <Grass x={grasses[grass].x} y={grasses[grass].y} />;
+    grassComponents.push(grassComponent);
+  }
+
+  const path = "M -10 -5 c 10 100 25 -50 50 20";
+
   return (
     <div id="game">
       <div id="main-menu">
@@ -47,30 +76,17 @@ function App() {
       </div>
       <div id="main">
         <div id="map">
-          <svg className="path">
-            <defs>
-              <linearGradient id="river-gradient">
-                <stop offset="0%" stop-color="brown" stop-opacity="0.4"></stop>
-                <stop offset="100%" stop-color="blue"></stop>
-              </linearGradient>
-            </defs>
-            <path
-              d="M -50 450 l 0 0 100 -100 
-                 q 200 -200 400 0 
-                 q 200 200 400 0 
-                 q 75 -50 125 -75"
-              stroke="url(#river-gradient)"
-              stroke-width="150px"
-              fill="none"
-            ></path>
+          <svg className="path" viewBox="0 0 100 100">
+            <path d={path} stroke="blue" stroke-width="10" fill="none"></path>
           </svg>
           <svg className="sea" viewBox="0 0 100 100">
             <path
-              d="M 130 -20 q -25 25 0 50 q 50 75 0 110  "
+              d="M 130 -20 q -25 25 0 50 q 50 75 0 110"
               stroke="blue"
               stroke-width="80"
             ></path>
           </svg>
+          <div className="grasses">{grassComponents}</div>
         </div>
         <div id="panel">
           <div id="info">
